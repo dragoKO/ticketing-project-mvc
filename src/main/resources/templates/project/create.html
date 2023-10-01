@@ -32,20 +32,20 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:action="@{/project/create}" method="post">
+                                    <form th:object="${project}" method="post">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="projectname" class="col-form-label">Project Name</label>
-                                                    <input id="projectname" type="text" class="form-control" placeholder="project name">
+                                                    <input th:field="*{projectName}" id="projectname" type="text" class="form-control" placeholder="project name">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="projectcode" class="col-form-label">Project Code</label>
-                                                    <input id="projectcode" type="text" class="form-control" placeholder="project code">
+                                                    <label for="projectCode" class="col-form-label">Project Code</label>
+                                                    <input th:field="*{projectCode}" id="projectCode" type="text" class="form-control" placeholder="project code">
                                                 </div>
                                             </div>
                                         </div>
@@ -53,8 +53,9 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label>Assigned Manager</label>
-                                                    <select name="assignedmanager" class="custom-select">
-                                                        <option></option>
+                                                    <select th:field="*{assignedManager}" name="role" class="custom-select">
+                                                        <option th:value="''" th:text="Select"></option>
+                                                        <option th:each="manager:${managers}" th:value="${manager.userName}" th:text="${manager.firstName+' '+manager.lastName}"></option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -62,22 +63,22 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="startdate">Project Start Date</label>
-                                                    <input id="startdate" type="date" class="form-control">
+                                                    <label  for="startDate">Project Start Date</label>
+                                                    <input th:field="*{startDate}" id="startDate" type="date" class="form-control">
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="enddate">Project End Date</label>
-                                                    <input id="enddate" type="date" class="form-control">
+                                                    <label for="endDate">Project End Date</label>
+                                                    <input th:field="*{endDate}" id="endDate" type="date" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="projectdetail">Project Detail</label>
-                                                    <textarea id="projectdetail" class="form-control" placeholder="project detail"></textarea>
+                                                    <label for="projectDetail">Project Detail</label>
+                                                    <textarea th:field="*{projectDetail}" id="projectDetail" class="form-control" placeholder="project detail"></textarea>
                                                 </div>
                                             </div>
                                         </div>
