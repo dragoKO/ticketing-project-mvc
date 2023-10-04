@@ -6,6 +6,7 @@ import com.google.service.ProjectService;
 import com.google.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -21,56 +22,70 @@ public class ProjectController {
     }
 
     @GetMapping("/create")
-    public String createProject(Model model) {
+    public String createProject(Model model){
 
-        model.addAttribute("project", new ProjectDTO());
-        model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("managers", userService.findAll());
+        model.addAttribute("project",new ProjectDTO());
+        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("managers",userService.findManagers());
 
 
         return "/project/create";
     }
 
     @PostMapping("/create")
-    public String insertProject(ProjectDTO project) {
+    public String insertProject(ProjectDTO project){
 
         projectService.save(project);
 
         return "redirect:/project/create";
     }
 
-
     @GetMapping("/delete/{projectcode}")
-    public String deleteProject(@PathVariable("projectcode") String projectcode) {
-
+    public String deleteProject(@PathVariable("projectcode") String projectcode){
         projectService.deleteById(projectcode);
-
         return "redirect:/project/create";
     }
 
     @GetMapping("/complete/{projectcode}")
-    public String completeProject(@PathVariable("projectcode") String projectcode) {
-
+    public String completeProject(@PathVariable("projectcode") String projectcode){
         projectService.completed(projectService.findById(projectcode));
-
         return "redirect:/project/create";
     }
 
     @GetMapping("/update/{projectcode}")
-    public String editProject(@PathVariable() String projectcode, Model model) {
+    public String editProject(@PathVariable("projectcode") String projectcode,Model model){
 
-        model.addAttribute("project", projectService.findById(projectcode));
-        model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("managers", userService.findAll());
-
-        return "/project/update";
-    }
-
-    @GetMapping("/update")
-    public String updateProject(@ModelAttribute("project")ProjectDTO projectcode) {
-
+        model.addAttribute("project",projectService.findById(projectcode));
+        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("managers",userService.findManagers());
 
 
         return "/project/update";
     }
+
+    @PostMapping("/update")
+    public String updateProject(ProjectDTO project){
+
+        projectService.update(project);
+
+        return "redirect:/project/create";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
