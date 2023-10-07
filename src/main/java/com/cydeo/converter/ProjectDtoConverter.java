@@ -1,31 +1,30 @@
 package com.cydeo.converter;
 
-import com.cydeo.dto.RoleDTO;
-import com.cydeo.service.RoleService;
+import com.cydeo.dto.ProjectDTO;
+import com.cydeo.service.ProjectService;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @ConfigurationPropertiesBinding
-public class RoleDtoConverter implements Converter<String, RoleDTO> {
+public class ProjectDtoConverter implements Converter<String, ProjectDTO> {
 
-    RoleService roleService;
+    ProjectService projectService;
 
     //injection
-    public RoleDtoConverter(RoleService roleService) {
-        this.roleService = roleService;
+    public ProjectDtoConverter(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
     @Override
-    public RoleDTO convert(String source) {
+    public ProjectDTO convert(String source) {
 
         if (source == null || source.equals("")) {
             return null;
         }
 
-        return roleService.findById(Long.parseLong(source));
+        return projectService.findById(source);
 
     }
 
